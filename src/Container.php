@@ -33,12 +33,12 @@ use Omega\Container\Exceptions\DependencyResolutionException;
 use Omega\Container\Exceptions\KeyNotFoundException;
 
 /**
- * Container class. 
- * 
- * The `Container` class provides a basic dependency injection container for 
+ * Container class.
+ *
+ * The `Container` class provides a basic dependency injection container for
  * managing class instances and their dependencies.
  *
- * @category    Omega 
+ * @category    Omega
  * @package     Omega\Container
  * @link        https://omegacms.github.io
  * @author      Adriano Giovannini <omegacms@outlook.com>
@@ -51,23 +51,23 @@ class Container
     /**
      * Binding class.
      *
-     * @var array $bindings Holds an array of class alias to factory closure bindings. 
+     * @var array $bindings Holds an array of class alias to factory closure bindings.
      */
     private array $bindings = [];
 
     /**
      * Resolved class.
      *
-     * @var array $resolved Holds an array of resolved class instances by alias. 
+     * @var array $resolved Holds an array of resolved class instances by alias.
      */
     private array $resolved = [];
 
-    /** 
-     * Bind the class. 
-     * 
-     * @param  string   $alias   Holds the class alias or key. 
-     * @param  callable $factory Holds a closure that defines how to create the class instance. 
-     * @return $this 
+    /**
+     * Bind the class.
+     *
+     * @param  string   $alias   Holds the class alias or key.
+     * @param  callable $factory Holds a closure that defines how to create the class instance.
+     * @return $this
      */
     public function bind( string $alias, callable $factory ) : static
     {
@@ -77,12 +77,12 @@ class Container
         return $this;
     }
 
-    /** 
-     * Resolve the container. 
-     * 
-     * @param  string $alias Holds the class alias or key. 
-     * @return mixed Return the resolved class instance. 
-     * @throws KeyNotFoundException if the key is not bound. 
+    /**
+     * Resolve the container.
+     *
+     * @param  string $alias Holds the class alias or key.
+     * @return mixed Return the resolved class instance.
+     * @throws KeyNotFoundException if the key is not bound.
      */
     public function resolve( string $alias ) : mixed
     {
@@ -99,14 +99,14 @@ class Container
         return $this->resolved[ $alias ];
     }
 
-    /** 
-     * Call a callable with dependency injection. 
-     * 
-     * @param  array|callable $callable   Holds the callable function or method. 
-     * @param  array          $parameters Holds an associative array of additional parameters to pass. 
-     * @return mixed Return the result of the callable. 
-     * @throws ReflectionException if the callable cannot be reflected. 
-     * @throws DependencyResolutionException if a dependency cannot be resolved. 
+    /**
+     * Call a callable with dependency injection.
+     *
+     * @param  array|callable $callable   Holds the callable function or method.
+     * @param  array          $parameters Holds an associative array of additional parameters to pass.
+     * @return mixed Return the result of the callable.
+     * @throws ReflectionException if the callable cannot be reflected.
+     * @throws DependencyResolutionException if a dependency cannot be resolved.
      */
     public function call( array|callable $callable, array $parameters = [] ) : mixed
     {
@@ -141,12 +141,12 @@ class Container
         return call_user_func( $callable, ...array_values( $dependencies ) );
     }
 
-    /** 
-     * Get reflector for the given callable. 
-     * 
-     * @param  array|callable $callable Holds the callable function or method. 
-     * @return ReflectionMethod|ReflectionFunction Return the reflection object for the callable. 
-     * @throws ReflectionException if the callable cannot be reflected. 
+    /**
+     * Get reflector for the given callable.
+     *
+     * @param  array|callable $callable Holds the callable function or method.
+     * @return ReflectionMethod|ReflectionFunction Return the reflection object for the callable.
+     * @throws ReflectionException if the callable cannot be reflected.
      */
     private function getReflector( array|callable $callable ) : ReflectionMethod|ReflectionFunction
     {

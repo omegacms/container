@@ -24,9 +24,9 @@ namespace Omega\Container\Exceptions;
 use Throwable;
 
 /**
- * Base interface representing a generic exception in a container. 
- * 
- * The `ContainerExceptionInterface` is a generic interface that represents exceptions 
+ * Base interface representing a generic exception in a container.
+ *
+ * The `ContainerExceptionInterface` is a generic interface that represents exceptions
  * thrown by a container when an error occurs.
  *
  * @category    Omega

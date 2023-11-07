@@ -19,9 +19,9 @@ declare( strict_types = 1 );
 namespace Omega\Container\Exceptions;
 
 /**
- * No entry was found in the container. 
- * 
- * The `NotFoundExceptionInterface` is an interface that extends `ContainerExceptionInterface` 
+ * No entry was found in the container.
+ *
+ * The `NotFoundExceptionInterface` is an interface that extends `ContainerExceptionInterface`
  * and represents exceptions thrown when no entry is found in the container.
  *
  * @category    Omega

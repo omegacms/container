@@ -24,10 +24,10 @@ namespace Omega\Container\Exceptions;
 use InvalidArgumentException;
 
 /**
- * Exception class for handling errors in resolving a dependency. 
- * 
- * The `DependencyResolutionException` class extends `InvalidArgumentException` and 
- * implements the `ContainerExceptionInterface`. It represents an exception that occurs 
+ * Exception class for handling errors in resolving a dependency.
+ *
+ * The `DependencyResolutionException` class extends `InvalidArgumentException` and
+ * implements the `ContainerExceptionInterface`. It represents an exception that occurs
  * when there is an error in resolving a dependency within the container.
  *
  * @category    Omega

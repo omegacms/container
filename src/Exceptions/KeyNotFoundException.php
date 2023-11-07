@@ -24,10 +24,10 @@ namespace Omega\Container\Exceptions;
 use InvalidArgumentException;
 
 /**
- * No entry was found in the container. 
- * 
- * The `KeyNotFoundException` class extends `InvalidArgumentException` and implements 
- * the `NotFoundExceptionInterface`. It represents an exception that occurs when no entry 
+ * No entry was found in the container.
+ *
+ * The `KeyNotFoundException` class extends `InvalidArgumentException` and implements
+ * the `NotFoundExceptionInterface`. It represents an exception that occurs when no entry
  * is found in the container.
  *
  * @category    Omega
