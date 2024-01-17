@@ -28,7 +28,7 @@ composer require omegacms/container
 
 ## Contributing
 
-If you'd like to contribute to the OmegaCMS Routing package, please follow our [contribution guidelines](CONTRIBUTING.md).
+If you'd like to contribute to the OmegaCMS Container package, please follow our [contribution guidelines](CONTRIBUTING.md).
 
 ## License
 
