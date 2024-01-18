@@ -5,13 +5,29 @@ The Config package provides a dependency injection container for managing class 
 ## Requirements
 
 * PHP 8.2 or later
+## Installation via Composer
 
-## Installation
+Add `"omegacms/container": "^1.0.0"` to the require block in your `composer.json` file and then run `composer install`.
 
-To install the package, you can simply run the following from the command line:
+```json
+{
+    "require": {
+        "omegacms/container": "^1.0.0"
+    }
+}
+```
+
+Alternatively, you can simply run the folowing from the command line:
 
 ```sh
-composer require omegacms/container
+composer require omegacms/container "^1.0.0"
+```
+
+If you want to include the test sources, use:
+
+```sh
+composer require --prefer-source omegacms/container "^1.0.0"
+```er require omegacms/container
 ```
 
 ## Documentation
