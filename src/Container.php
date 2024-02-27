@@ -70,7 +70,7 @@ class Container
      * @return $this
      */
     public function bind( string $alias, callable $factory ) : static
-    {   
+    {
         $this->bindings[ $alias ] = $factory;
         $this->resolved[ $alias ] = null;
 
@@ -166,12 +166,12 @@ class Container
      * @param  array $providers Holds an array of profiders to load.
      * @return void
      */
-    public function register( array $providers ) : void
+    public function makeInstance( array $providers ) : void
     {
         foreach ( $providers as $provider ) {
             // Ad ogni iterazione crea un istanza della classe
             $instance = new $provider;
-
+            print_r($instance);
             // E' il metodo bind del service provider
             if ( method_exists( $instance, 'bind' ) ) {
                 $instance->bind( $this );
