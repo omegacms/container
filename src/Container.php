@@ -156,24 +156,4 @@ class Container
 
         return new ReflectionFunction( $callable );
     }
-
-    /**
-     * Bind providers to the application.
-     *
-     * This method binds service providers to the application, allowing them
-     * to register services and perform any necessary setup.
-     *
-     * @param  array $providers Holds an array of profiders to load.
-     * @return void
-     */
-    public function makeInstance( array $providers ) : void
-    {
-        foreach ( $providers as $provider ) {
-            $instance = new $provider;
-
-            if ( method_exists( $instance, 'bind' ) ) {
-                $instance->bind( $this );
-            }
-        }
-    }
 }
