@@ -69,7 +69,7 @@ class Container
      * @param  callable $factory Holds a closure that defines how to create the class instance.
      * @return $this
      */
-    public function bind( string $alias, callable $factory ) : static
+    public function alias( string $alias, callable $factory ) : static
     {
         $this->bindings[ $alias ] = $factory;
         $this->resolved[ $alias ] = null;
