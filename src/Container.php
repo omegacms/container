@@ -169,10 +169,8 @@ class Container
     public function makeInstance( array $providers ) : void
     {
         foreach ( $providers as $provider ) {
-            // Ad ogni iterazione crea un istanza della classe
             $instance = new $provider;
-            print_r($instance);
-            // E' il metodo bind del service provider
+
             if ( method_exists( $instance, 'bind' ) ) {
                 $instance->bind( $this );
             }
