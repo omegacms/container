@@ -88,7 +88,7 @@ class Container
     {
         if ( ! isset( $this->bindings[ $alias ] ) ) {
             throw new DependencyResolutionException(
-                "{$alias} is not bound"
+                $alias . 'is not bound.'
             );
         }
 
@@ -134,7 +134,7 @@ class Container
             }
 
             throw new InvalidArgumentException(
-                "{$name} cannot be resolved"
+                $name . 'cannot be resolved.'
             );
         }
 
