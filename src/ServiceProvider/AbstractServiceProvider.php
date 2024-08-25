@@ -21,7 +21,6 @@ namespace Omega\Container\ServiceProvider;
 /**
  * @use
  */
-use function Omega\Helpers\config;
 use Omega\Application\Application;
 
 /**
