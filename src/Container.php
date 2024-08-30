@@ -51,14 +51,14 @@ class Container
     /**
      * Binding class.
      *
-     * @var array $bindings Holds an array of class alias to factory closure bindings.
+     * @var array<string, callable> $bindings Holds an array of class alias to factory closure bindings.
      */
     private array $bindings = [];
 
     /**
      * Resolved class.
      *
-     * @var array $resolved Holds an array of resolved class instances by alias.
+     * @var array<string, missing> $resolved Holds an array of resolved class instances by alias.
      */
     private array $resolved = [];
 
@@ -102,13 +102,13 @@ class Container
     /**
      * Call a callable with dependency injection.
      *
-     * @param  array|callable $callable   Holds the callable function or method.
-     * @param  array          $parameters Holds an associative array of additional parameters to pass.
+     * @param  callable|array{0: object|string, 1: string} $callable   Holds the callable function or method.
+     * @param  array<string, mixed>                        $parameters Holds an associative array of additional parameters to pass.
      * @return mixed Return the result of the callable.
      * @throws ReflectionException if the callable cannot be reflected.
      * @throws DependencyResolutionException if a dependency cannot be resolved.
      */
-    public function call( array|callable $callable, array $parameters = [] ) : mixed
+    public function call( callable|array $callable, array $parameters = [] ) : mixed
     {
         $reflector = $this->getReflector( $callable );
 
@@ -144,11 +144,11 @@ class Container
     /**
      * Get reflector for the given callable.
      *
-     * @param  array|callable $callable Holds the callable function or method.
+     * @param  callable|array{0: object|string, 1: string} $callable Holds the callable function or method.
      * @return ReflectionMethod|ReflectionFunction Return the reflection object for the callable.
      * @throws ReflectionException if the callable cannot be reflected.
      */
-    private function getReflector( array|callable $callable ) : ReflectionMethod|ReflectionFunction
+    private function getReflector( callable|array $callable ) : ReflectionMethod|ReflectionFunction
     {
         if ( is_array( $callable ) ) {
             return new ReflectionMethod( $callable[ 0 ], $callable[ 1 ] );
