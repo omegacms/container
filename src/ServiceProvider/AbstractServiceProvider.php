@@ -51,28 +51,28 @@ abstract class AbstractServiceProvider
      * @param  Application $application Holds an instance of Application.
      * @return void
      */
-    final public function bind(Application $application): void
+    final public function bind( Application $application ) : void
     {
-        $name = $this->name();
+        $name    = $this->name();
         $factory = $this->factory();
         $drivers = $this->drivers();
 
-        $application->alias($name, function (Application $application) use ($name, $factory, $drivers) {
-            foreach ($drivers as $key => $value) {
-                $factory->register($key, $value);
+        $application->alias( $name, function ( Application $application ) use ( $name, $factory, $drivers ) {
+            foreach ( $drivers as $key => $value ) {
+                $factory->register( $key, $value );
             }
 
-            $config = config($name);
+            $config = config( $name );
 
             // Assumiamo che $config sia un array con chiave 'default'
-            if (!is_array($config) || !isset($config['default']) || !isset($config[$config['default']])) {
+            if ( ! is_array( $config ) || ! isset( $config[ 'default' ] ) || ! isset( $config[ $config ['default' ] ] ) ) {
                 throw new RuntimeException(
                     'Invalid configuration for ' . $name
                 );
             }
 
-            return $factory->bootstrap($config[$config['default']]);
-        });
+            return $factory->bootstrap( $config[ $config[ 'default' ] ] );
+        } );
     }
 
     /**
