@@ -11,7 +11,7 @@
 /**
  * @declare
  */
-declare( strict_types = 1 );
+declare(strict_types=1);
 
 /**
  * @namespace
@@ -22,6 +22,8 @@ namespace Omega\Container\ServiceProvider;
  * @use
  */
 use Omega\Application\Application;
+use Closure;
+use RuntimeException;
 
 /**
  * Abstract service provider class.
@@ -49,21 +51,28 @@ abstract class AbstractServiceProvider
      * @param  Application $application Holds an instance of Application.
      * @return void
      */
-    final public function bind( Application $application ) : void
+    final public function bind(Application $application): void
     {
-        $name    = $this->name();
+        $name = $this->name();
         $factory = $this->factory();
         $drivers = $this->drivers();
 
-        $application->alias( $name, function ( $application ) use ( $name, $factory, $drivers ) {
-            foreach ( $drivers as $key => $value ) {
-                $factory->register( $key, $value );
+        $application->alias($name, function (Application $application) use ($name, $factory, $drivers) {
+            foreach ($drivers as $key => $value) {
+                $factory->register($key, $value);
             }
 
-            $config = config( $name );
+            $config = config($name);
 
-            return $factory->bootstrap( $config[ $config[ 'default' ] ] );
-        } );
+            // Assumiamo che $config sia un array con chiave 'default'
+            if (!is_array($config) || !isset($config['default']) || !isset($config[$config['default']])) {
+                throw new RuntimeException(
+                    'Invalid configuration for ' . $name
+                );
+            }
+
+            return $factory->bootstrap($config[$config['default']]);
+        });
     }
 
     /**
@@ -82,9 +91,9 @@ abstract class AbstractServiceProvider
      * This method should return an instance of the service factory or a callback
      * function that creates the service.
      *
-     * @return mixed Return the service factory or a callback function.
+     * @return ServiceProviderInterface Return the service factory.
      */
-    abstract protected function factory() : mixed;
+    abstract protected function factory() : ServiceProviderInterface;
 
     /**
      * Get drivers.
@@ -92,7 +101,7 @@ abstract class AbstractServiceProvider
      * This method should return an array of drivers that can be registered with
      * the service factory.
      *
-     * @return array Return an associative array where keys are driver names and values are factory callbacks.
+     * @return array<string, Closure> Return an associative array where keys are driver names and values are factory callbacks.
      */
     abstract protected function drivers() : array;
 }

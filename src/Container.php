@@ -24,6 +24,9 @@ namespace Omega\Container;
 use function array_values;
 use function call_user_func;
 use function is_array;
+use function is_callable;
+use function is_string;
+use Closure;
 use InvalidArgumentException;
 use ReflectionException;
 use ReflectionFunction;
@@ -58,7 +61,7 @@ class Container
     /**
      * Resolved class.
      *
-     * @var array<string, missing> $resolved Holds an array of resolved class instances by alias.
+     * @var array<string, mixed> $resolved Holds an array of resolved class instances by alias.
      */
     private array $resolved = [];
 
@@ -107,9 +110,16 @@ class Container
      * @return mixed Return the result of the callable.
      * @throws ReflectionException if the callable cannot be reflected.
      * @throws DependencyResolutionException if a dependency cannot be resolved.
+     * @throws InvalidArgumentException if the callable is not invocable.
      */
     public function call( callable|array $callable, array $parameters = [] ) : mixed
     {
+        if ( ! is_callable( $callable ) ) {
+            throw new InvalidArgumentException(
+                'The provided callable is not invocable.'
+            );
+        }
+
         $reflector = $this->getReflector( $callable );
 
         $dependencies = [];
@@ -138,7 +148,8 @@ class Container
             );
         }
 
-        return call_user_func( $callable, ...array_values( $dependencies ) );
+        return $callable( ...array_values( $dependencies ) );
+        //return call_user_func( $callable, ...array_values( $dependencies ) );
     }
 
     /**
@@ -147,13 +158,19 @@ class Container
      * @param  callable|array{0: object|string, 1: string} $callable Holds the callable function or method.
      * @return ReflectionMethod|ReflectionFunction Return the reflection object for the callable.
      * @throws ReflectionException if the callable cannot be reflected.
+     * @throws InvalidArgumentException if an unsupported callable type is provided.
      */
     private function getReflector( callable|array $callable ) : ReflectionMethod|ReflectionFunction
     {
         if ( is_array( $callable ) ) {
+
             return new ReflectionMethod( $callable[ 0 ], $callable[ 1 ] );
+        } elseif ( $callable instanceof Closure || is_string( $callable ) ) {
+            return new ReflectionFunction( $callable );
         }
 
-        return new ReflectionFunction( $callable );
+        throw new InvalidArgumentException(
+            'Unsupported callable type provided.'
+        );
     }
 }

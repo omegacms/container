@@ -52,7 +52,7 @@ interface ServiceProviderInterface
     /**
      * Bootstrap the service driver.
      *
-     * @param  array $config Holds the configuration options for the service.
+     * @param  array<string, mixed> $config Holds the configuration options for the service.
      * @return mixed Return the bootstrapped service instance.
      */
     public function bootstrap( array $config ) : mixed;
