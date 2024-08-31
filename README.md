@@ -1,3 +1,4 @@
+![PHPStan Level](https://img.shields.io/badge/PHPStan-level_9-brightgreen)
 # Container Package
 
 The Config package provides a dependency injection container for managing class instances and their dependencies.
