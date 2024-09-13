@@ -21,8 +21,4 @@
       "Omega\\Container\\": "src/"
     }
   },
-  "scripts": {
-    "test": "vendor/bin/phpunit"
-  },
-  "minimum-stability": "stable"
 }
