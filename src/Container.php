@@ -121,7 +121,7 @@ class Container implements ContainerInterface
     {
         if ( ! isset( $this->bindings[ $alias ] ) ) {
             throw new DependencyResolutionException(
-                $alias . 'is not bound.'
+                $alias . ' is not bound.'
             );
         }
 
