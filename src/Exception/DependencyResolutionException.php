@@ -16,7 +16,7 @@ declare( strict_types = 1 );
 /**
  * @namespace
  */
-namespace Omega\Container\Exceptions;
+namespace Omega\Container\Exception;
 
 /**
  * @use
@@ -31,8 +31,8 @@ use InvalidArgumentException;
  * when there is an error in resolving a dependency within the container.
  *
  * @category    Omega
- * @package     Omega\Container
- * @subpackege  Omega\Container\Exceptions
+ * @package     Container
+ * @subpackage  Exception
  * @link        https://omegacms.github.io
  * @author      Adriano Giovannini <omegacms@outlook.com>
  * @copyright   Copyright (c) 2024 Adriano Giovannini. (https://omegacms.github.io)

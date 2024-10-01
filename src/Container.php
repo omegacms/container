@@ -32,8 +32,8 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionNamedType;
-use Omega\Container\Exceptions\DependencyResolutionException;
-use Omega\Container\Exceptions\KeyNotFoundException;
+use Omega\Container\Exception\DependencyResolutionException;
+use Omega\Container\Exception\KeyNotFoundException;
 
 /**
  * Container class.
@@ -42,14 +42,14 @@ use Omega\Container\Exceptions\KeyNotFoundException;
  * managing class instances and their dependencies.
  *
  * @category    Omega
- * @package     Omega\Container
+ * @package     Container
  * @link        https://omegacms.github.io
  * @author      Adriano Giovannini <omegacms@outlook.com>
  * @copyright   Copyright (c) 2024 Adriano Giovannini. (https://omegacms.github.io)
  * @license     https://www.gnu.org/licenses/gpl-3.0-standalone.html     GPL V3.0+
  * @version     1.0.0
  */
-class Container
+class Container implements ContainerInterface
 {
     /**
      * Binding class.
@@ -66,7 +66,37 @@ class Container
     private array $resolved = [];
 
     /**
-     * Bind the class.
+     * @inheritdoc
+     *
+     * @param  string $alias The class alias or key to check.
+     * @return bool Returns true if the alias exists in the container bindings, false otherwise.
+     */
+    public function has( string $alias ) : bool
+    {
+        return isset( $this->bindings[ $alias ] );
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param  string $alias The class alias or key.
+     * @return mixed The resolved class instance.
+     * @throws KeyNotFoundException if the alias is not found in the container.
+     */
+    public function get(string $alias): mixed
+    {
+        // Check if the alias is bound to the container
+        if (!isset($this->bindings[$alias])) {
+            throw new KeyNotFoundException("Alias '{$alias}' is not found in the container.");
+        }
+
+        // Resolve the instance using the alias
+        return $this->resolve($alias);
+    }
+
+
+    /**
+     * @inheritdoc
      *
      * @param  string   $alias   Holds the class alias or key.
      * @param  callable $factory Holds a closure that defines how to create the class instance.
@@ -81,7 +111,7 @@ class Container
     }
 
     /**
-     * Resolve the container.
+     * @inheritdoc
      *
      * @param  string $alias Holds the class alias or key.
      * @return mixed Return the resolved class instance.
@@ -150,6 +180,47 @@ class Container
 
         return $callable( ...array_values( $dependencies ) );
         //return call_user_func( $callable, ...array_values( $dependencies ) );
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param  string $alias The class alias or key to remove.
+     * @return bool Returns true if the alias was found and removed, false otherwise.
+     */
+    public function remove( string $alias ) : bool
+    {
+        if (isset( $this->bindings[ $alias ] ) ) {
+            unset( $this->bindings[ $alias ] );
+            unset( $this->resolved[ $alias ] );
+            
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * This method removes all registered aliases and resolved instances.
+     *
+     * @return void
+     */
+    public function clear() : void
+    {
+        $this->bindings = [];
+        $this->resolved = [];
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return array<string, callable> Returns an array of all registered bindings.
+     */
+    public function getBindings() : array
+    {
+        return $this->bindings;
     }
 
     /**

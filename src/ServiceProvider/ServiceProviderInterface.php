@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of Omega CMS - ServiceProvider Package
+ * Part of Omega CMS - Container Package
  *
  * @link       https://omegacms.github.io
  * @author     Adriano Giovannini <omegacms@outlook.com>
@@ -21,17 +21,20 @@ namespace Omega\Container\ServiceProvider;
 /**
  * @use
  */
-use Closure;
+use Omega\Application\Application;
 
 /**
- * Service provider interface.
- *
- * The `ServiceProviderInterface` defines the contract for service provider factories in
- * the Omega framework. Service providers are responsible for registering and bootstrapping
- * services within the framework's service container.
- *
+ * ServiceProviderInterface defines a contract for binding services to an application container within the Omega CMS framework.
+ * Implementations of this interface will provide the logic to register services or dependencies into the application's service container.
+ * 
+ * - `bind(Application $application): void`
+ *   - This method is responsible for binding services or components to the provided `Application` instance.
+ *   - The `Application` parameter represents the main application container to which services are bound.
+ *   - The method does not return a value and is expected to perform its operations internally.
+ * 
  * @category    Omega
- * @package     Omega\ServiceProvider
+ * @package     Container
+ * @subpackage  ServiceProvider
  * @link        https://omegacms.github.io
  * @author      Adriano Giovannini <omegacms@outlook.com>
  * @copyright   Copyright (c) 2024 Adriano Giovannini. (https://omegacms.github.io)
@@ -41,19 +44,10 @@ use Closure;
 interface ServiceProviderInterface
 {
     /**
-     * Register a service driver.
-     *
-     * @param  string  $alias  Holds the driver alias.
-     * @param  Closure $driver Holds a closure that creates an instance of the service.
-     * @return $this
+     * Registers or binds services into the application container.
+     * 
+     * @param  Application $application Holds the main application container to which services are bound.
+     * @return void This method does not return a value.
      */
-    public function register( string $alias, Closure $driver ) : static;
-
-    /**
-     * Bootstrap the service driver.
-     *
-     * @param  array<string, mixed> $config Holds the configuration options for the service.
-     * @return mixed Return the bootstrapped service instance.
-     */
-    public function bootstrap( array $config ) : mixed;
+    public function bind( Application $application ) : void;
 }
